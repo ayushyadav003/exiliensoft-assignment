@@ -25,17 +25,16 @@ export async function sendRequest(
 
   try {
     const response = await axios(config)
-    console.log(response)
     return { data: response.data }
   } catch (error) {
     const res = await refreshAccessToken()
     if (res) {
-      headers['Authorization'] = `Bearer ${sessionStorage.getItem(
-        'accessToken',
-      )}`
+      sessionStorage.setItem('accessToken', res.data.access_token)
+      sessionStorage.setItem('refreshToken', res.data.refresh_token)
       return sendRequest(method, url, data, headers)
+    } else {
+      throw error
     }
-    throw error
   }
 }
 

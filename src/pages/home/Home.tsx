@@ -1,24 +1,10 @@
 import { Star } from '@mui/icons-material/'
 import './home.scss'
-import { blogs, services, testimonials } from '../../utils/Utils'
-import { Carousel } from 'react-responsive-carousel'
-import { useState } from 'react'
+import { services } from '../../utils/Utils'
+import Blogs from '../../components/blogs/Blogs'
+import Testimonials from '../../components/testimonials/Testimonials'
 
 export default function Home() {
-  const [currentTestimonialSlide, setCurrentTestimonialSlide] = useState(0)
-
-  const handleArrowClick = (side: String) => {
-    if (side === 'left') {
-      setCurrentTestimonialSlide(
-        (prevSlide) =>
-          (prevSlide - 1 + testimonials.length) % testimonials.length,
-      )
-    } else {
-      setCurrentTestimonialSlide(
-        (prevSlide) => (prevSlide + 1) % testimonials.length,
-      )
-    }
-  }
   return (
     <div className="homeWrapper">
       <div className="introSection">
@@ -77,94 +63,8 @@ export default function Home() {
         </div>
         <button>Learn More</button>
       </div>
-      <div className="testimonialWrapper">
-        <Carousel
-          showThumbs={false}
-          showStatus={false}
-          showIndicators={false}
-          selectedItem={currentTestimonialSlide}
-          autoPlay={true}
-          interval={2000}
-          onChange={(index) => setCurrentTestimonialSlide(index)}
-        >
-          {testimonials.map((testimonial, i) => (
-            <div key={i} className="testimonial">
-              <img src={testimonial.image} alt={testimonial.title} />
-              <div>
-                <p>{testimonial.desc}</p>
-                <p style={{ fontSize: '18px' }}>
-                  <span style={{ fontWeight: '600' }}>{testimonial.title}</span>{' '}
-                  - {testimonial.designation}
-                </p>
-              </div>
-            </div>
-          ))}
-        </Carousel>
-        <div className="arrows">
-          <svg
-            onClick={() => handleArrowClick('left')}
-            xmlns="http://www.w3.org/2000/svg"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-          >
-            <path
-              d="M21 11H1"
-              stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M11 21L1 11L11 1"
-              stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-            onClick={() => handleArrowClick('right')}
-          >
-            <path
-              d="M1 11H21"
-              stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M11 21L21 11L11 1"
-              stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-      </div>
-      <div className="blogSection">
-        <h2>Our Blogs</h2>
-        <div className="blogsWrapper">
-          {blogs.map((blog, i) => {
-            return (
-              <div className="blog" key={i}>
-                <img src={blog.image} alt={blog.title} />
-                <div>
-                  <h3>{blog.title}</h3>
-                  <p>{blog.desc}</p>
-                  <span>
-                    <img src="images/rightArrow.png" alt="" />
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-        <button>View all posts</button>
-      </div>
+      <Testimonials />
+      <Blogs />
     </div>
   )
 }
